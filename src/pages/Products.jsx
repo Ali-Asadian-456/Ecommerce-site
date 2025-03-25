@@ -18,7 +18,7 @@ export default function Products() {
                 <p className='text-center text-sm'>{product.price}</p>
                 <p className='text-xs text-gray-500'>{product.smallDescription}</p>
               </div>
-              <button  onClick={()=>addCart(product)} className='m-auto bg-blue-700 text-white text-sm  block m-auto w-full p-2  text-sm'>+ Add To Cart</button>
+              <button  onClick={()=>addCart(product)} className='m-auto bg-blue-700 text-white text-sm   block  w-full p-2  text-sm'>+ Add To Cart</button>
             </div>
           )
         })

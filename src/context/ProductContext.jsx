@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { products_data } from "../data/product";
 
 export const ProductContext = createContext([]);
@@ -38,7 +38,7 @@ const removeCart = (product)=>{
 
   setCart(oldCart=>{
       let previous = [...oldCart];
-      const isProduct = previous.find(prod=>prod.id == product.id)
+      const isProduct = previous.find(prod=>prod.id === product.id)
       if(isProduct){
           const index = previous.indexOf(isProduct);
           previous.splice(index,1)
@@ -47,18 +47,14 @@ const removeCart = (product)=>{
   })
 }
 
-  const filteredProducts = (category) => {
-    if (category) {
-      const filtered = products_data.filter((product) => {
-        if (product.category === category) {
-          return product;
-        }
-      });
-      setProducts(filtered);
-    } else {
-      setProducts(products_data);
-    }
-  };
+const filteredProducts = useCallback((category) => {
+  if (category) {
+    setProducts(products_data.filter((product) => product.category === category));
+  } else {
+    setProducts(products_data);
+  }
+}, []); // ✅ حالا `filteredProducts` مقدار ثابت دارد
+
 
 
 
@@ -95,7 +91,11 @@ const handleClose = () => {
   setOpenModal(false);
 };
 
-  
+
+
+
+
+
 
   return (
     <ProductContext.Provider value={{ products, filteredProducts, addCart, removeCart,invoice,setInvoice,cart,setCart,handleOpen,handleClose }}>

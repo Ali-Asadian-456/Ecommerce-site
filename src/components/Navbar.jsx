@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
-import { FaShoppingCart, FaYoutube } from "react-icons/fa";
-import { FaBagShopping } from "react-icons/fa6";
+import { useContext, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { FaShoppingCart, FaYoutube } from "react-icons/fa";
 import { products_categories } from "../data/product";
 import { ProductContext } from "../context/ProductContext";
+import ThemeToggle from "./themetoggle" ;
+// import {LoginModal} from "./LoginModal";
+import LoginModal from "./LoginModal";  // import LoginModal
+import Button from "react-bootstrap/Button"; // import Button from react-bootstrap
+
+// import Bootstrap styles just for LoginModal
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 export default function Navbar({ onOpenModal }) {
-  const { invoice,handleOpen,handleClose } = useContext(ProductContext);
+  const { invoice, handleOpen, handleClose } = useContext(ProductContext);
+  const [showModal, setShowModal] = useState(false);
 
   const isActive = (element) => {
     return element?.isActive ? "text-blue-600" : "";
@@ -30,14 +37,6 @@ export default function Navbar({ onOpenModal }) {
       </ul>
 
       <div className="flex items-center gap-4">
-        {/* دکمه ورود / ثبت‌نام */}
-        <button
-          onClick={handleOpen}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700"
-        >
-          ورود / ثبت‌نام
-        </button>
-
         <Link className="relative" to={"/cart"}>
           <FaShoppingCart className="text-2xl" />
           {invoice?.count > 0 && (
@@ -48,9 +47,18 @@ export default function Navbar({ onOpenModal }) {
         </Link>
       </div>
 
+      {/* Navbar section where Bootstrap is used */}
+      <nav className="bg-blue-500 p-4 flex justify-between items-center rounded-md text-white " >
+        {/* <h1 className="text-white text-xl">لوگو</h1> */}
+        <Button     onClick={() => setShowModal(true)}>
+          ورود/ثبت نام
+        </Button>
+      </nav>
 
+      <ThemeToggle/>
 
-    
+      {/* Pass the state and function for showing modal */}
+      <LoginModal show={showModal} setShow={setShowModal} />
     </div>
   );
 }

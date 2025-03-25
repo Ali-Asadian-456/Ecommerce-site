@@ -12,7 +12,9 @@ export default function Cart() {
     setCart([])
     setInvoice({count:0,subTotal:0});
     navigate('/success');
+    
   }
+  
   return (
     <div className=''>
       {
