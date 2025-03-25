@@ -5,7 +5,7 @@ import { products_categories } from "../data/product";
 import { ProductContext } from "../context/ProductContext";
 import ThemeToggle from "./themetoggle" ;
 // import {LoginModal} from "./LoginModal";
-import LoginModal from "./LoginModal";  // import LoginModal
+import LoginSignUpModal from "./LoginSignUpModal";  // import LoginModal
 import Button from "react-bootstrap/Button"; // import Button from react-bootstrap
 
 // import Bootstrap styles just for LoginModal
@@ -58,7 +58,7 @@ export default function Navbar({ onOpenModal }) {
       <ThemeToggle/>
 
       {/* Pass the state and function for showing modal */}
-      <LoginModal show={showModal} setShow={setShowModal} />
+      <LoginSignUpModal show={showModal} setShow={setShowModal} />
     </div>
   );
 }

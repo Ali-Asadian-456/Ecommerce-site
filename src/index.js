@@ -10,6 +10,7 @@ import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Success from './pages/Success';
 
+
 import { createBrowserRouter,Router,RouterProvider } from 'react-router-dom';
 const router =createBrowserRouter([
 {
@@ -31,6 +32,7 @@ const router =createBrowserRouter([
         element: <Success/>
 
       },
+    
      
       
     ]
