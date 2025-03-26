@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom"; // Added import
+import Dashboard from '../pages/Dashboard'; // Added import
 
-function LoginForm() {
+
+function LoginForm({ closeModal }) { // Added closeModal prop
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -27,6 +30,8 @@ function LoginForm() {
     }));
   };
 
+  const navigate = useNavigate(); // Added useNavigate hook
+
   const handleSubmit = async () => {
     if (!errors.email && !errors.password) {
       try {
@@ -40,6 +45,8 @@ function LoginForm() {
         }
         const data = await response.json();
         console.log("Login successful", data);
+        closeModal(); // Close the modal on success
+        navigate("/dashboard"); // Redirect to dashboard on success
       } catch (error) {
         setServerError(error.message);
       }

@@ -7,6 +7,7 @@ function SignUpForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ username: "", email: "", password: "" });
   const [serverError, setServerError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,10 +51,11 @@ function SignUpForm() {
           throw new Error(errorData.message || "Signup failed");
         }
         const data = await response.json();
-        console.log("Sign-up successful", data);
+        setSuccessMessage("Sign-up successful!"); // Set success message
         setServerError(""); // Clear server error on success
       } catch (error) {
         setServerError(error.message); // Display server error message
+        setSuccessMessage(""); // Clear success message on error
       }
     }
   };
@@ -85,6 +87,7 @@ function SignUpForm() {
       />
       {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
       {serverError && <span className="text-red-500 text-sm">{serverError}</span>}
+      {successMessage && <span className="text-green-500 text-sm">{successMessage}</span>}
       <Button onClick={handleSubmit} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
         Sign Up
       </Button>

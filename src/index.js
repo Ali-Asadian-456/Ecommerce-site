@@ -9,6 +9,8 @@ import { ProductContextProvider } from './context/ProductContext';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Success from './pages/Success';
+import Dashboard from './pages/Dashboard';
+
 
 
 import { createBrowserRouter,Router,RouterProvider } from 'react-router-dom';
@@ -18,6 +20,7 @@ const router =createBrowserRouter([
   element:<App /> ,
     children: [
       {
+        resetProducts:true,
         path:'/:category?',
         element: <Products/>
 
@@ -33,7 +36,12 @@ const router =createBrowserRouter([
 
       },
     
-     
+      {
+        path:'/dashboard',
+        element: <Dashboard/>
+
+      },
+    
       
     ]
 

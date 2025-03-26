@@ -58,7 +58,7 @@ export default function Navbar({ onOpenModal }) {
       <ThemeToggle/>
 
       {/* Pass the state and function for showing modal */}
-      <LoginSignUpModal show={showModal} setShow={setShowModal} />
+      <LoginSignUpModal show={showModal} setShow={setShowModal} /> {/* Pass setShowModal */}
     </div>
   );
 }

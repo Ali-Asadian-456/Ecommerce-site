@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
 function LoginSignUpModal({ show, setShow }) {
-  const handleClose = () => setShow(false);
+  const closeModal = () => setShow(false);
   const [activeTab, setActiveTab] = useState("login");
 
   return (
@@ -17,7 +17,7 @@ function LoginSignUpModal({ show, setShow }) {
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Authentication</h2>
-          <button onClick={handleClose} className="text-gray-600">✕</button>
+          <button onClick={closeModal} className="text-gray-600">✕</button>
         </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -31,7 +31,7 @@ function LoginSignUpModal({ show, setShow }) {
           </TabsList>
           
           <TabsContent value="login">
-            {activeTab === "login" && <LoginForm />}
+            {activeTab === "login" && <LoginForm closeModal={closeModal} />}
           </TabsContent>
           
           <TabsContent value="signup">
