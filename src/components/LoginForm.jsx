@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // Added import
 import Dashboard from '../pages/Dashboard'; // Added import
 
 
-function LoginForm({ closeModal }) { // Added closeModal prop
+function LoginForm({ closeModal, onLoginSuccess }) { // Added closeModal and onLoginSuccess prop
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -45,6 +45,7 @@ function LoginForm({ closeModal }) { // Added closeModal prop
         }
         const data = await response.json();
         console.log("Login successful", data);
+        onLoginSuccess(data.token); // Pass the token to the parent
         closeModal(); // Close the modal on success
         navigate("/dashboard"); // Redirect to dashboard on success
       } catch (error) {

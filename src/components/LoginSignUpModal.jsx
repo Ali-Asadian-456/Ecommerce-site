@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 
-function LoginSignUpModal({ show, setShow }) {
+function LoginSignUpModal({ show, setShow, onLoginSuccess }) {
   const closeModal = () => setShow(false);
   const [activeTab, setActiveTab] = useState("login");
 
@@ -31,7 +31,7 @@ function LoginSignUpModal({ show, setShow }) {
           </TabsList>
           
           <TabsContent value="login">
-            {activeTab === "login" && <LoginForm closeModal={closeModal} />}
+            {activeTab === "login" && <LoginForm closeModal={closeModal} onLoginSuccess={onLoginSuccess} />}
           </TabsContent>
           
           <TabsContent value="signup">

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { FaShoppingCart, FaYoutube } from "react-icons/fa";
 import { products_categories } from "../data/product";
@@ -12,15 +12,25 @@ import Button from "react-bootstrap/Button"; // import Button from react-bootstr
 // import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 export default function Navbar({ onOpenModal }) {
-  const { invoice, handleOpen, handleClose } = useContext(ProductContext);
+  const { invoice } = useContext(ProductContext);
   const [showModal, setShowModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const isActive = (element) => {
-    return element?.isActive ? "text-blue-600" : "";
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLoginSuccess = (token) => {
+    localStorage.setItem("jwtToken", token);
+    setIsLoggedIn(true);
+    setShowModal(false);
   };
 
+  const isActive = ({ isActive }) => (isActive ? "text-blue-600" : "");
+
   return (
-    <div className="w-full h-20 shadow-lg border flex justify-between px-8 items-center bg-white">
+    <div className="w-full h-20 shadow-lg border flex justify-between px-8 items-center bg-white dark:bg-emerald-700 ">
       <NavLink to={"/"} className="flex flex-col items-center">
         <FaYoutube className="text-red-500 text-4xl" />
         <span>Ali Asadian</span>
@@ -47,18 +57,22 @@ export default function Navbar({ onOpenModal }) {
         </Link>
       </div>
 
-      {/* Navbar section where Bootstrap is used */}
-      <nav className="bg-blue-500 p-4 flex justify-between items-center rounded-md text-white " >
-        {/* <h1 className="text-white text-xl">لوگو</h1> */}
-        <Button     onClick={() => setShowModal(true)}>
-          ورود/ثبت نام
-        </Button>
-      </nav>
+      {!isLoggedIn ? (
+        <nav className="bg-blue-500 p-4 flex justify-between items-center rounded-md text-white">
+          <Button onClick={() => setShowModal(true)}>ورود/ثبت نام</Button>
+        </nav>
+      ) : (
+        <nav className="bg-red-500 p-4 flex justify-between items-center rounded-md text-white">
+          <Button onClick={() => {
+            localStorage.removeItem("jwtToken");
+            setIsLoggedIn(false);
+          }}>خروج</Button>
+        </nav>
+      )}
 
-      <ThemeToggle/>
+      <ThemeToggle />
 
-      {/* Pass the state and function for showing modal */}
-      <LoginSignUpModal show={showModal} setShow={setShowModal} /> {/* Pass setShowModal */}
+      <LoginSignUpModal show={showModal} setShow={setShowModal} onLoginSuccess={handleLoginSuccess} />
     </div>
   );
 }

@@ -15,8 +15,8 @@ function App() {
   }, [category, filteredProducts]);
 
   return (
-    <div className="min-h-screen h-auto bg-slate-200  dark:bg-black">
-      <Navbar  />
+    <div className="min-h-screen h-auto bg-slate-200  dark:bg-slate-700">
+      <Navbar />
 
       <div className="w-[80%] m-auto my-4 bg-white p-4">
         <Outlet />
