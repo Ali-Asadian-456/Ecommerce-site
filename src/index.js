@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ProductContextProvider } from './context/ProductContext';
-
+import { UserProvider } from "./context/UserContext"; // Ensure correct import
 
 import Products from './pages/Products';
 import Cart from './pages/Cart';
@@ -54,7 +54,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
      <ProductContextProvider>
+      <UserProvider>
           <RouterProvider router={router}/>
+       </UserProvider>
       </ProductContextProvider>
   </React.StrictMode>
 );

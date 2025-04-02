@@ -65,7 +65,6 @@ app.post("/auth/login", async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    // Set the token as an HttpOnly cookie
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -73,7 +72,14 @@ app.post("/auth/login", async (req, res) => {
       maxAge: 3600000, // 1 hour
     });
 
-    res.json({ message: "Login successful" });
+    res.json({
+      message: "Login successful",
+      user: {
+        username: user.username, // Correctly return 'username'
+        email: user.email,
+      },
+    });
+
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

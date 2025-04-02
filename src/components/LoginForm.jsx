@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom"; // Added import
-import Dashboard from '../pages/Dashboard'; // Added import
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext"; // Ensure correct import path
+import Dashboard from '../pages/Dashboard';
 
-
-function LoginForm({ closeModal, onLoginSuccess }) { // Added closeModal and onLoginSuccess prop
+function LoginForm({ closeModal, onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -30,29 +30,40 @@ function LoginForm({ closeModal, onLoginSuccess }) { // Added closeModal and onL
     }));
   };
 
-  const navigate = useNavigate(); // Added useNavigate hook
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async () => {
     if (!errors.email && !errors.password) {
       try {
         const response = await fetch("http://localhost:5000/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+           method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
         });
         if (!response.ok) {
           throw new Error("Invalid credentials");
         }
         const data = await response.json();
         console.log("Login successful", data);
-        onLoginSuccess(data.token); // Pass the token to the parent
-        closeModal(); // Close the modal on success
-        navigate("/dashboard"); // Redirect to dashboard on success
+        if (data.user) {
+          setUser(data.user);  // Store user data in state
+          closeModal();
+          navigate("/dashboard");
+      } else {
+          setServerError("Failed to retrieve user data.");
+      }
+        
+        navigate("/dashboard");
       } catch (error) {
         setServerError(error.message);
       }
     }
   };
+
+
+  
 
   return (
     <div className="mt-4 flex flex-col gap-2">
