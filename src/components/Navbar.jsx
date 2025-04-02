@@ -3,23 +3,21 @@ import { NavLink, Link } from "react-router-dom";
 import { FaShoppingCart, FaYoutube } from "react-icons/fa";
 import { products_categories } from "../data/product";
 import { ProductContext } from "../context/ProductContext";
-import ThemeToggle from "./themetoggle" ;
-// import {LoginModal} from "./LoginModal";
-import LoginSignUpModal from "./LoginSignUpModal";  // import LoginModal
-import Button from "react-bootstrap/Button"; // import Button from react-bootstrap
+import ThemeToggle from "./themetoggle";
+import LoginSignUpModal from "./LoginSignUpModal";
+import Button from "react-bootstrap/Button";
+import { UserContext } from '../context/UserContext';
 
-// import Bootstrap styles just for LoginModal
-// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-export default function Navbar({ onOpenModal }) {
+export default function Navbar({ onOpenModal, onLogout }) {
   const { invoice } = useContext(ProductContext);
   const [showModal, setShowModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useContext(UserContext); // Use 'user' instead of 'User'
 
   useEffect(() => {
-    const token = localStorage.getItem("jwtToken");
-    setIsLoggedIn(!!token);
-  }, []);
+    setIsLoggedIn(user !== null && user !== undefined);
+  }, [user]);
 
   const handleLoginSuccess = (token) => {
     localStorage.setItem("jwtToken", token);
@@ -63,16 +61,25 @@ export default function Navbar({ onOpenModal }) {
         </nav>
       ) : (
         <nav className="bg-red-500 p-4 flex justify-between items-center rounded-md text-white">
-          <Button onClick={() => {
-            localStorage.removeItem("jwtToken");
-            setIsLoggedIn(false);
-          }}>خروج</Button>
+          <Button
+            onClick={() => {
+              localStorage.removeItem("jwtToken");
+              setIsLoggedIn(false);
+              onLogout();
+            }}
+          >
+            خروج
+          </Button>
         </nav>
       )}
 
       <ThemeToggle />
 
-      <LoginSignUpModal show={showModal} setShow={setShowModal} onLoginSuccess={handleLoginSuccess} />
+      <LoginSignUpModal
+        show={showModal}
+        setShow={setShowModal}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </div>
   );
 }

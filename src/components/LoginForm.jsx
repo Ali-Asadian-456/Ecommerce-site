@@ -37,10 +37,10 @@ function LoginForm({ closeModal, onLoginSuccess }) {
     if (!errors.email && !errors.password) {
       try {
         const response = await fetch("http://localhost:5000/auth/login", {
-           method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+          credentials: "include",
         });
         if (!response.ok) {
           throw new Error("Invalid credentials");
@@ -48,22 +48,18 @@ function LoginForm({ closeModal, onLoginSuccess }) {
         const data = await response.json();
         console.log("Login successful", data);
         if (data.user) {
-          setUser(data.user);  // Store user data in state
+          setUser(data.user); // Save user to context and local storage
+          localStorage.setItem("user", JSON.stringify(data.user)); // Update local storage
           closeModal();
           navigate("/dashboard");
-      } else {
+        } else {
           setServerError("Failed to retrieve user data.");
-      }
-        
-        navigate("/dashboard");
+        }
       } catch (error) {
         setServerError(error.message);
       }
     }
   };
-
-
-  
 
   return (
     <div className="mt-4 flex flex-col gap-2">
