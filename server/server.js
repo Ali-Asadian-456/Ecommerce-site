@@ -122,4 +122,35 @@ app.get("/auth/check", async (req, res) => {
   }
 });
 
+// Update User Profile
+app.post("/auth/update", async (req, res) => {
+  const { username, email } = req.body;
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.username = username || user.username;
+    user.email = email || user.email;
+    await user.save();
+
+    res.json({
+      message: "Profile updated successfully",
+      user: { username: user.username, email: user.email },
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.listen(5000, () => console.log("Server running on http://localhost:5000"));
