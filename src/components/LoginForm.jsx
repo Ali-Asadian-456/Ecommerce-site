@@ -46,10 +46,8 @@ function LoginForm({ closeModal, onLoginSuccess }) {
           throw new Error("Invalid credentials");
         }
         const data = await response.json();
-        console.log("Login successful", data);
         if (data.user) {
-          setUser(data.user); // Save user to context and local storage
-          localStorage.setItem("user", JSON.stringify(data.user)); // Update local storage
+          setUser(data.user); // Save user to context
           closeModal();
           navigate("/dashboard");
         } else {

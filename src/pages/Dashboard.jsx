@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext"; // Ensure correct import p
 export default function Dashboard() {
   const { user } = useContext(UserContext); // Access user data from context
 
+
   return (
     <div>
       <h1>Dashboard</h1>
