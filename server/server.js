@@ -124,7 +124,7 @@ app.get("/auth/check", async (req, res) => {
 
 // Update User Profile
 app.post("/auth/update", async (req, res) => {
-  const { username, email } = req.body;
+  const { username, email, password } = req.body; // Include password
   const token = req.cookies.jwt;
 
   if (!token) {
@@ -141,6 +141,11 @@ app.post("/auth/update", async (req, res) => {
 
     user.username = username || user.username;
     user.email = email || user.email;
+
+    if (password) {
+      user.password = await bcrypt.hash(password, 10); // Hash the new password
+    }
+
     await user.save();
 
     res.json({
