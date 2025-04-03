@@ -42,6 +42,9 @@ export default function Dashboard() {
           const data = await response.json();
           setUser(data.user); // Update user in context
           setMessage("Profile updated successfully!");
+          setUsername(""); // Clear username input
+          setEmail("");    // Clear email input
+          setPassword(""); // Clear password input
         } else {
           const errorText = await response.text();
           setMessage(`Failed to update profile: ${errorText}`);
