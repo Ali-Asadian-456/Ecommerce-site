@@ -102,7 +102,7 @@ export default function AIAssistant() {
           onClick={closeModal}
         >
           <div
-            className="bg-white p-4 rounded relative w-[600px] min-h-[400px] flex flex-col  text-center"
+            className="bg-white p-4 rounded relative w-[600px] min-h-[400px] max-h-[600px] flex flex-col  text-center overflow-scroll"
             onClick={(e) => e.stopPropagation()}
           >
             <span
