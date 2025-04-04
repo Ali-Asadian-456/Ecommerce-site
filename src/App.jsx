@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from './context/ProductContext';
 import { UserContext } from './context/UserContext';
+import AIAssistant from './components/AIAssistant';
 
 function App() {
   const { filteredProducts } = useContext(ProductContext);
@@ -28,13 +29,13 @@ function App() {
   }, [category, filteredProducts]);
 
   return (
-    <div className="min-h-screen h-auto bg-slate-200  dark:bg-slate-700">
+    <div className="min-h-screen h-auto bg-slate-200  dark:bg-slate-700 overflow-hidden" >
       <Navbar onLogout={handleLogout} />
 
-      <div className="w-[80%] m-auto my-4 bg-white p-4">
+      <div className="w-[80%] m-auto my-4 bg-white p-4 overflow-hidden">
         <Outlet />
       </div>
-
+      <AIAssistant />
     </div>
   );
 }
