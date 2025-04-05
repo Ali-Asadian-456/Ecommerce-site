@@ -101,17 +101,23 @@ export default function AIAssistant() {
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center "
           onClick={closeModal}
         >
+          
+          
           <div
-            className="bg-white p-4 rounded relative w-[600px] min-h-[400px] max-h-[600px] flex flex-col  text-center overflow-scroll"
+            className="bg-white p-4 rounded relative w-[600px] min-h-[400px] max-h-[600px] flex flex-col  text-center "
             onClick={(e) => e.stopPropagation()}
           >
-            <span
+
+
+             <span
               className="cursor-pointer  ml-auto text-xl font-bold absolute top-2 right-2 text-red-600"
               onClick={closeModal}
             >
               &times;
             </span>
             <h2 className="text-green-800">مشاوره با هوش مصنوعی </h2>
+           <div className="overflow-y-auto max-h-[300px] max-w-[97%] px-4 absolute bottom-2 w-full mx-auto">
+          
             <div className="mb-2">
               {messages.map((msg, index) => (
                 <div key={index}>{msg}</div>
@@ -167,6 +173,7 @@ export default function AIAssistant() {
             {chatId && (
               <div className="mt-4 text-blue-500">Chat ID: {chatId}</div>
             )}
+           </div>
           </div>
         </div>
       )}
