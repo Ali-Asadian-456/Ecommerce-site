@@ -100,13 +100,13 @@ app.post("/auth/logout", (req, res) => {
 app.get("/auth/check", async (req, res) => {
   if (!req.cookies) {
     console.error("Cookies are undefined. Ensure cookie-parser middleware is initialized.");
-    return res.status(500).json({ message: "Server error: Cookies are undefined" });
+    return res.status(200).json({ message: "Server error: Cookies are undefined" });
   }
 
   const token = req.cookies.jwt;
 
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized: No token provided" });
+    return res.status(200).json({ authenticated: false });
   }
 
   try {
@@ -115,10 +115,10 @@ app.get("/auth/check", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.json({ message: "Authenticated", user });
+    return res.json({ message: "Authenticated", user });
   } catch (error) {
     console.error("Error during authentication check:", error.message); // Log detailed error
-    res.status(401).json({ message: "Unauthorized: Invalid token" });
+    return res.status(200).json({ authenticated: false });
   }
 });
 

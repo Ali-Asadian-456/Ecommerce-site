@@ -110,28 +110,28 @@ export default function AIAssistant() {
 
 
              <span
-              className="cursor-pointer  ml-auto text-xl font-bold absolute top-2 right-2 text-red-600"
+              className="cursor-pointer text-2xl   ml-auto  font-bold absolute top-2 right-2 text-red-600"
               onClick={closeModal}
             >
               &times;
             </span>
             <h2 className="text-green-800">مشاوره با هوش مصنوعی </h2>
-           <div className="overflow-y-auto max-h-[300px] max-w-[97%] px-4 absolute bottom-2 w-full mx-auto">
+           <div className="overflow-y-auto max-h-[300px] max-w-[97%] px-4 absolute bottom-4 w-full mx-auto">
           
             <div className="mb-2">
               {messages.map((msg, index) => (
                 <div key={index}>{msg}</div>
               ))}
             </div>
-            <div className="mt-auto">
-              <input
+            <div className="mt-auto flex items-center">
+              <textarea
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                className="border p-1 mr-2 w-[400px]"
+                className="border-2 m-1 p-2 h-[70px] min-h-[70px] max-h-[70px]  w-[80%] rounded"
               />
               <button
-                className="bg-blue-500 text-white px-2 py-1 rounded"
+                className="bg-blue-500 text-white h-[69px] w-[15%] rounded"
                 onClick={async () => {
                   try {
                     const response = await fetch(
