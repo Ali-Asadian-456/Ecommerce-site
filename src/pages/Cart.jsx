@@ -8,12 +8,23 @@ export default function Cart() {
   const {cart,invoice,removeCart,setCart,setInvoice} = useContext(ProductContext);
   const navigate = useNavigate();
 
-  const placeOrder = ()=>{
-    setCart([])
-    setInvoice({count:0,subTotal:0});
-    navigate('/success');
-    
-  }
+  const placeOrder = async () => {
+    try {
+      // Save cart to server as purchase history
+      await fetch("http://localhost:5000/api/purchase-history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: cart }),
+      });
+
+      // Clear the cart and reset invoice
+      setCart([]);
+      setInvoice({ count: 0, subTotal: 0 });
+      navigate("/success");
+    } catch (error) {
+      console.error("Failed to save purchase history:", error);
+    }
+  };
   
   return (
     <div className=''>

@@ -23,6 +23,49 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", UserSchema);
 
+
+
+const PurchaseHistorySchema = new mongoose.Schema({
+  historyNumber: { type: Number, required: true },
+  items: { type: Array, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const PurchaseHistory = mongoose.model("PurchaseHistory", PurchaseHistorySchema);
+
+let historyCounter = 1; // Initialize the purchase history counter
+
+app.post("/api/purchase-history", async (req, res) => {
+  try {
+    const { items } = req.body;
+    if (!items || items.length === 0) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
+    const purchaseHistory = new PurchaseHistory({
+      historyNumber: historyCounter++,
+      items,
+    });
+
+    await purchaseHistory.save();
+    res.json({ message: "Purchase history saved successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+app.get("/api/purchase-history", async (req, res) => {
+  try {
+    const purchaseHistory = await PurchaseHistory.find();
+    res.json(purchaseHistory);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 app.post("/auth/signup", async (req, res) => {
   const { username, email, password } = req.body;
   // Validate username, email, and password
