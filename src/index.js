@@ -10,6 +10,8 @@ import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Success from './pages/Success';
 import Dashboard from './pages/Dashboard';
+import UserEdit from './pages/UserEdit';
+import PurchaseHistory from './pages/PurchaseHistory';
 
 
 
@@ -38,7 +40,23 @@ const router =createBrowserRouter([
     
       {
         path:'/dashboard',
-        element: <Dashboard/>
+        element: <Dashboard/> ,
+
+        children: [
+
+          {
+            path:'useredit', // Changed to relative path
+            element: <UserEdit/>
+    
+          },
+          {
+            path:'purchasehistory', // Changed to relative path
+            element: <PurchaseHistory/>
+    
+          },
+
+
+        ]
 
       },
     
