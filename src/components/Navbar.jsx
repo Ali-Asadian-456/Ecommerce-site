@@ -81,7 +81,7 @@ export default function Navbar({ onOpenModal, onLogout }) {
 
       {!isLoggedIn ? (
         <nav className="bg-blue-500 p-4 flex justify-between items-center rounded-md text-white">
-          <Button onClick={() => setShowModal(true)}>ورود/ثبت نام</Button>
+          <Button onClick={() => setShowModal(true)}>Login / SignUp</Button>
         </nav>
       ) : (
         <nav className="bg-red-500 p-4 flex justify-between items-center rounded-md text-white">

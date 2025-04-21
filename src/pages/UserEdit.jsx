@@ -58,7 +58,7 @@ export default function UserEdit() {
   };
 
   return (
-    <div>
+    <div className=" p-10 border">
       
       {user ? (
         <div>
@@ -68,7 +68,8 @@ export default function UserEdit() {
           <p className="text-green-900 mt-2 bg-pink-400 py-2 px-1 rounded">
             Email: {user.email}
           </p>
-          <div className="mt-4">
+        
+          <div className="mt-4 flex flex-col ">
             <input
               type="text"
               value={username}
